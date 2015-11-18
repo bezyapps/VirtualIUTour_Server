@@ -29,7 +29,6 @@ public class ImageController implements ModelDriven<Object> {
         long start = System.currentTimeMillis();
         out = convert(imageTest.getData());
         long end = System.currentTimeMillis();
-
         System.out.println("TIME: " + String.valueOf(end - start));
         imageTest.setData("");
         imageTest.setLocation(out);
