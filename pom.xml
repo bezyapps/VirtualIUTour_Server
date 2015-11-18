@@ -57,12 +57,20 @@
              <version>0.20</version>
          </dependency>
 
+         <dependency>
+             <groupId>nz.ac.waikato.cms.weka</groupId>
+             <artifactId>weka-stable</artifactId>
+             <version>3.6.7</version>
+         </dependency>
+
          <!-- jstl dependancy -->
          <dependency>
              <groupId>javax.servlet</groupId>
              <artifactId>jstl</artifactId>
              <version>1.2</version>
          </dependency>
+
+
 
          <!-- <dependency>
              <groupId>javax.servlet</groupId>
