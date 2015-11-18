@@ -13,7 +13,7 @@ public class ImageTest {
     }
 
     public void setData(String data) {
-        this.data = data;
+        this.data = data; //test
     }
 
     public String getLocation() {
