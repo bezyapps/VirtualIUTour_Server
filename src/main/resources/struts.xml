@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.convention.package.locators" value="rest"/>
+    <constant name="struts.convention.action.suffix" value="Controller"/>
+    <constant name="struts.convention.action.mapAllMatches" value="true"/>
+    <constant name="struts.rest.content.restrictToGET" value="false"/>
+    <constant name="struts.convention.default.parent.package" value="rest-default"/>
+</struts>
+
+        <!--   <constant name="struts.convention.action.suffix" value="Controller"/>
+           <constant name="struts.convention.action.mapAllMatches" value="true"/>
+           <constant name="struts.convention.default.parent.package" value="rest-default"/>
+           <constant name="struts.convention.package.locators" value="rest"/>
+           <constant name="struts.mapper.class" value="rest" />
+        <constant name="struts.devMode" value="true" />
+        <constant name="struts.mapper.class" value="rest" />
+        <constant name="struts.convention.action.suffix" value="Controller"/>
+        <constant name="struts.convention.action.mapAllMatches" value="true"/>
+        <constant name="struts.convention.default.parent.package" value="rest-default"/>
+        <constant name="struts.convention.package.locators" value="controllers"/>
+        <constant name="struts.convention.default.parent.package" value="rest-default"/>
+
+
+
+   <<package name="user" namespace="/" extends="struts-default">
+      <action name="form" class="com.org.actions.HomeAction">
+       <result name="SUCCESS">WEB-INF/pages/form.jsp</result>
+      </action>
+      <action name="register" class="com.org.actions.HomeAction"
+       method="getDetail">
+       <result name="success">WEB-INF/pages/details.jsp</result>
+      </action>
+
+
+
+    </package>-->
+      
