@@ -6,21 +6,14 @@ import boofcv.struct.image.ImageFloat32;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-
 import org.apache.commons.codec.binary.Base64;
-import sun.misc.IOUtils;
-import sun.nio.ch.IOUtil;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by ericbhatti on 11/18/15.
@@ -36,10 +29,11 @@ public class ImageController implements ModelDriven<Object> {
     public HttpHeaders create() throws Exception {
 
         long start = System.currentTimeMillis();
-        TupleDesc[] features = getFeaturesFromImage(imageTest.getData());
-        Instances trainingInstances = getInstances(features);
-        trainingInstances.setClassIndex(trainingInstances.numAttributes() - 1);
-        String response[] = getClass(trainingInstances);
+//        TupleDesc[] features = getFeaturesFromImage(imageTest.getData());
+//        Instances testingInstances = getInstances(features);
+        Instances testingInstances = getInstances(getFeaturesFromImage(imageTest.getData()));
+        testingInstances.setClassIndex(testingInstances.numAttributes() - 1);
+        String response[] = getClass(testingInstances);
         long end = System.currentTimeMillis();
         System.out.println("TIME: " + String.valueOf(end - start));
         imageTest.setData(response[0]);
@@ -88,7 +82,6 @@ public class ImageController implements ModelDriven<Object> {
                 }
             }
         }
-
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(dataBuilder.toString().getBytes());
         ConverterUtils.DataSource source = new ConverterUtils.DataSource(byteArrayInputStream);
         return source.getDataSet();
