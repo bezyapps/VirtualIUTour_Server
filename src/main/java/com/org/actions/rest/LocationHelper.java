@@ -41,7 +41,7 @@ public class LocationHelper {
         if (locationHelper == null) {
             locationHelper = new LocationHelper();
             try {
-                randomSubSpace = (RandomSubSpace) getModelFromResources("RandomSubSpace.model");
+                randomSubSpace = (RandomSubSpace) getModelFromResources("big.model");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -54,7 +54,10 @@ public class LocationHelper {
         for (int i = 1; i < 65; i++) {
             headBuilder.append("@attribute data_" + i + " numeric\n");
         }
-        headBuilder.append("@attribute class {e303,e304}\n\n");
+      //   headBuilder.append("@attribute class {Faculty_Room_1,Faculty_Room_2}\n\n");
+       // headBuilder.append("@attribute class {e303,e304}\n\n");
+        ///Change image controller classes too
+       headBuilder.append("@attribute class {Coordinator_Office,E_301,E_302,E_303,E_304,E_305,E_307,E_309,Male_Staff_Washroom,Optical_Communication_Lab,E_310,E_311,E_Lab_308,Faculty_Room,Left_End,Left_to_Middle,Male_WashRoom,Middle_To_Left,Middle_to_Right,Right_End,Right_To_Middle}\n\n");
         headBuilder.append("@data\n");
     }
 

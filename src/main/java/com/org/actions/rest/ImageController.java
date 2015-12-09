@@ -9,6 +9,8 @@ import org.apache.struts2.rest.HttpHeaders;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Arrays;
+
 import org.apache.commons.codec.binary.Base64;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -24,8 +26,9 @@ public class ImageController implements ModelDriven<Object> {
     ImageTest imageTest = new ImageTest();
     Matcher matcher = new Matcher();
     LocationHelper locationHelper = LocationHelper.getInstance();
-    String[] classes = {"Faculty_Room_1", "Faculty_Room_2"};
-
+   // String[] classes = {"Faculty_Room_1", "Faculty_Room_2"};
+   ///Change Location helper get Header too
+    String[] classes = {"Coordinator_Office","E_301","E_302","E_303","E_304","E_305","E_307","E_309","Male_Staff_Washroom","Optical_Communication_Lab","E_310","E_311","E_Lab_308","Faculty_Room","Left_End","Left_to_Middle","Male_WashRoom","Middle_To_Left","Middle_to_Right","Right_End","Right_To_Middle"};
     public HttpHeaders create() throws Exception {
 
         long start = System.currentTimeMillis();
@@ -60,15 +63,42 @@ public class ImageController implements ModelDriven<Object> {
             int output = (int) locationHelper.getModel().classifyInstance(instance);
             classCount[output]++;
         }
-        System.out.println(String.valueOf(classCount[0]) + "  " + String.valueOf(classCount[1] + " " + String.valueOf(instances.numInstances())));
-        if (classCount[0] > classCount[1]) {
+        int largestId = getLargest(classCount);
+        String counts = Arrays.toString(classCount);
+        System.out.println(counts);
+        //System.out.println(String.valueOf(classCount[0]) + "  " + String.valueOf(classCount[1] + " " + String.valueOf(instances.numInstances())));
+        /*if (classCount[0] > classCount[1]) {
             return new String[]{String.valueOf(classCount[0]) + "  " + String.valueOf(classCount[1]), classes[0]};
         } else if (classCount[0] < classCount[1]) {
             return new String[]{String.valueOf(classCount[0]) + "  " + String.valueOf(classCount[1]), classes[1]};
         } else {
             return new String[]{String.valueOf(classCount[0]) + "  " + String.valueOf(classCount[1]), ""};
+        }*/
+
+        if(largestId == -1)
+        {
+            return new String[]{counts, ""};
+        }else
+        {
+            return new String[]{counts, classes[largestId]};
         }
 
+    }
+
+
+    private int getLargest(int[] classCount)
+    {
+        int largestValue = 0;
+        int largestId = -1;
+        for(int i = 0; i < classCount.length; i++)
+        {
+            if(largestValue < classCount[i])
+            {
+                largestId = i;
+                largestValue = classCount[i];
+            }
+        }
+        return largestId;
     }
 
     private Instances getInstances(TupleDesc[] features) throws Exception {
