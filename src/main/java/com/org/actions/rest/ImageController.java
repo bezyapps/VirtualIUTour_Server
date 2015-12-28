@@ -4,6 +4,7 @@ import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageFloat32;
 import com.opensymphony.xwork2.ModelDriven;
+import com.org.actions.database.DataBaseConnection;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
 import javax.imageio.ImageIO;
@@ -156,8 +157,18 @@ public class ImageController implements ModelDriven<Object> {
             read = br.readLine();
 
         }
+        String dbClass = "com.mysql.jdbc.Driver";
+        String test = "";
+        Class c = null;
+        try {
+            c = Class.forName(dbClass);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         imageTest.setData(sb.toString());
-        imageTest.setLocation("The world is now!");
+        imageTest.setLocation("Database");
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        dataBaseConnection.test();
         return new DefaultHttpHeaders("index").disableCaching();
     }
 }

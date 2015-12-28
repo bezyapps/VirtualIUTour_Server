@@ -1,38 +1,38 @@
-    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">  
-     <modelVersion>4.0.0</modelVersion>  
-     <groupId>com.beingjavaguys.strutssample</groupId>  
-     <artifactId>StrutsMavenProject</artifactId>  
-     <packaging>war</packaging>  
-     <version>1.0-SNAPSHOT</version>  
-     <name>StrutsMavenProject</name>  
-     <url>http://maven.apache.org</url>  
-     <properties>  
-      <struts.version>2.3.24.1</struts.version>  
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+     <groupId>com.beingjavaguys.strutssample</groupId>
+     <artifactId>StrutsMavenProject</artifactId>
+     <packaging>war</packaging>
+     <version>1.0-SNAPSHOT</version>
+     <name>StrutsMavenProject</name>
+     <url>http://maven.apache.org</url>
+     <properties>
+      <struts.version>2.3.24.1</struts.version>
       <jdk.version>1.7</jdk.version>
-      <context.path>StrutsMavenProject</context.path>  
-     </properties>  
-     <developers>  
-      
+      <context.path>StrutsMavenProject</context.path>
+     </properties>
+     <developers>
 
-     </developers>  
-      
-     <build>  
-      <finalName>${pom.artifactId}</finalName>  
-      <plugins>  
-       <plugin>  
-        <artifactId>maven-compiler-plugin</artifactId>  
-        <configuration>  
-         <source>${jdk.version}</source>  
-         <target>${jdk.version}</target>  
-        </configuration>  
-       </plugin>  
-      </plugins>  
-     </build>  
-     <dependencies>  
-      <dependency>  
-       <groupId>org.apache.struts</groupId>  
-       <artifactId>struts2-core</artifactId>  
+
+     </developers>
+
+     <build>
+      <finalName>${pom.artifactId}</finalName>
+      <plugins>
+       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+         <source>${jdk.version}</source>
+         <target>${jdk.version}</target>
+        </configuration>
+       </plugin>
+      </plugins>
+     </build>
+     <dependencies>
+      <dependency>
+       <groupId>org.apache.struts</groupId>
+       <artifactId>struts2-core</artifactId>
        <version>${struts.version}</version>
       </dependency>
          <dependency>
@@ -85,5 +85,12 @@
              <version>3.0.1</version>
          </dependency>
 
-     </dependencies>  
-    </project>  
+         <dependency>
+             <groupId>mysql</groupId>
+             <artifactId>mysql-connector-java</artifactId>
+             <version>5.1.38</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+     </dependencies>
+    </project>
