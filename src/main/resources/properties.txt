@@ -1,0 +1,6 @@
+{
+"host":"localhost",
+"database":"virtual_tour",
+"username":"eric",
+"password":"bezy"
+}
