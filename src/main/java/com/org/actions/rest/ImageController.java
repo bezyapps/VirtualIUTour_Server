@@ -157,18 +157,10 @@ public class ImageController implements ModelDriven<Object> {
             read = br.readLine();
 
         }
-        String dbClass = "com.mysql.jdbc.Driver";
-        String test = "";
-        Class c = null;
-        try {
-            c = Class.forName(dbClass);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         imageTest.setData(sb.toString());
         imageTest.setLocation("Database");
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        dataBaseConnection.test();
+        dataBaseConnection.getTodaysSchedule("E_301");
         return new DefaultHttpHeaders("index").disableCaching();
     }
 }
