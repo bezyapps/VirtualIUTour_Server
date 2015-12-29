@@ -40,8 +40,12 @@ public class ImageController implements ModelDriven<Object> {
         String response[] = getClass(testingInstances);
         long end = System.currentTimeMillis();
         System.out.println("TIME: " + String.valueOf(end - start));
+
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        String resp = dataBaseConnection.getTodaysSchedule("E_301");
         imageTest.setData(response[0]);
-        imageTest.setLocation(response[1]);
+        //imageTest.setLocation(response[1]);
+        imageTest.setLocation(resp);
         return new DefaultHttpHeaders("create");
     }
 
@@ -157,10 +161,11 @@ public class ImageController implements ModelDriven<Object> {
             read = br.readLine();
 
         }
-        imageTest.setData(sb.toString());
-        imageTest.setLocation("Database");
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        dataBaseConnection.getTodaysSchedule("E_301");
+        String resp = dataBaseConnection.getTodaysSchedule("E_301");
+        imageTest.setData(sb.toString());
+        imageTest.setLocation(resp);
+
         return new DefaultHttpHeaders("index").disableCaching();
     }
 }

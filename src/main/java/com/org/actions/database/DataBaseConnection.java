@@ -1,6 +1,7 @@
 package com.org.actions.database;
 
 
+import com.org.actions.models.Schedule;
 import org.json.JSONException;
 import org.json.JSONObject;
 import sun.util.resources.cldr.aa.CalendarData_aa_ER;
@@ -10,8 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created by ericbhatti on 12/28/15.
@@ -78,8 +78,9 @@ public class DataBaseConnection {
         return dbConnection;
     }
 
-    public void getTodaysSchedule(String marker)
+    public String getTodaysSchedule(String marker)
     {
+        String jsonResponse = null;
         Calendar calendar = Calendar.getInstance();
         String today = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
         StringBuilder builder = new StringBuilder("SELECT "+ DataBaseFields.Weekdays.WEEKDAY_NAME + ",");
@@ -103,14 +104,29 @@ public class DataBaseConnection {
         try {
             Statement statement = dbConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
+            Map<String,Object> resultMap = new LinkedHashMap<>();
+            String displayMarkerName = null;
+            List<Schedule> scheduleList = new ArrayList<>();
             while (resultSet.next()) {
-                String tableName = resultSet.getString(resultSet.findColumn(DataBaseFields.Schedules.SCHEDULED_CLASS));
-                System.out.println("Class: " + tableName);
+                displayMarkerName = resultSet.getString(resultSet.findColumn(DataBaseFields.Markers.MARKER_DISPLAY_NAME));
+                Schedule schedule = new Schedule();
+                schedule.setClassName(resultSet.getString(resultSet.findColumn(DataBaseFields.Schedules.SCHEDULED_CLASS)));
+                schedule.setStartTime(resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.START_TIME)));
+                schedule.setEndTime(resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.END_TIME)));
+                schedule.setIsCurrent(false);
+                scheduleList.add(schedule);
             }
+            resultMap.put("displayMarkerName",displayMarkerName);
+            resultMap.put("day",today);
+            resultMap.put("schedules",scheduleList);
+            JSONObject object = new JSONObject(resultMap);
+            jsonResponse = object.toString();
+            //jsonResponse = jsonResponse.replace("\\","");
             dbConnection.close();
         }  catch (SQLException e) {
             e.printStackTrace();
         }
+        return jsonResponse;
     }
 
 
