@@ -43,6 +43,7 @@ public class ImageController implements ModelDriven<Object> {
 
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         String resp = dataBaseConnection.getTodaysSchedule("E_301");
+//        String resp = dataBaseConnection.getTodaysSchedule(response[1]);
         imageTest.setData(response[0]);
         //imageTest.setLocation(response[1]);
         imageTest.setLocation(resp);

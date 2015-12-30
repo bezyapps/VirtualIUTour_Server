@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by ericbhatti on 12/28/15.
@@ -111,17 +114,41 @@ public class DataBaseConnection {
                 displayMarkerName = resultSet.getString(resultSet.findColumn(DataBaseFields.Markers.MARKER_DISPLAY_NAME));
                 Schedule schedule = new Schedule();
                 schedule.setClassName(resultSet.getString(resultSet.findColumn(DataBaseFields.Schedules.SCHEDULED_CLASS)));
-                schedule.setStartTime(resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.START_TIME)));
-                schedule.setEndTime(resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.END_TIME)));
-                schedule.setIsCurrent(false);
+                String startTime = resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.START_TIME));
+                String endTime = resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.END_TIME));
+                schedule.setStartTime(startTime);
+                schedule.setEndTime(endTime);
+                try {
+                    SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+                    Date startTimeInDate = parser.parse(startTime);
+                    Date endTimeInDate = parser.parse(endTime);
+                    String currentTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+                    Date currentTimeInDate = parser.parse(currentTime);
+                    if ((currentTimeInDate.after(startTimeInDate) && currentTimeInDate.before(endTimeInDate)) || currentTimeInDate.equals(startTimeInDate) || currentTimeInDate.equals(endTimeInDate)) {
+                        schedule.setIsCurrent(true);
+                    }
+                    else{
+                        schedule.setIsCurrent(false);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    schedule.setIsCurrent(false);
+                }
                 scheduleList.add(schedule);
             }
-            resultMap.put("displayMarkerName",displayMarkerName);
+            System.out.println(marker);
+            Statement statement2 = dbConnection.createStatement();
+            ResultSet resultSet2 = statement.executeQuery("SELECT " + DataBaseFields.Markers.MARKER_DISPLAY_NAME + " FROM " + DataBaseFields.Markers.TABLE_NAME + " WHERE " + DataBaseFields.Markers.MARKER_CLASS + " = '" + marker + "'");
+            String display = "";
+            while (resultSet2.next()) {
+               display = resultSet2.getString(1);
+            }
+
+            resultMap.put("displayMarkerName",display);
             resultMap.put("day",today);
             resultMap.put("schedules",scheduleList);
             JSONObject object = new JSONObject(resultMap);
             jsonResponse = object.toString();
-            //jsonResponse = jsonResponse.replace("\\","");
             dbConnection.close();
         }  catch (SQLException e) {
             e.printStackTrace();
