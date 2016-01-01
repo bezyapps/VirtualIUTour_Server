@@ -108,10 +108,10 @@ public class DataBaseConnection {
             Statement statement = dbConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             Map<String,Object> resultMap = new LinkedHashMap<>();
-            String displayMarkerName = null;
+//            String displayMarkerName = null;
             List<Schedule> scheduleList = new ArrayList<>();
             while (resultSet.next()) {
-                displayMarkerName = resultSet.getString(resultSet.findColumn(DataBaseFields.Markers.MARKER_DISPLAY_NAME));
+//                displayMarkerName = resultSet.getString(resultSet.findColumn(DataBaseFields.Markers.MARKER_DISPLAY_NAME));
                 Schedule schedule = new Schedule();
                 schedule.setClassName(resultSet.getString(resultSet.findColumn(DataBaseFields.Schedules.SCHEDULED_CLASS)));
                 String startTime = resultSet.getString(resultSet.findColumn(DataBaseFields.TimeSlots.START_TIME));
@@ -137,7 +137,6 @@ public class DataBaseConnection {
                 scheduleList.add(schedule);
             }
             System.out.println(marker);
-            Statement statement2 = dbConnection.createStatement();
             ResultSet resultSet2 = statement.executeQuery("SELECT " + DataBaseFields.Markers.MARKER_DISPLAY_NAME + " FROM " + DataBaseFields.Markers.TABLE_NAME + " WHERE " + DataBaseFields.Markers.MARKER_CLASS + " = '" + marker + "'");
             String display = "";
             while (resultSet2.next()) {

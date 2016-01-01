@@ -33,8 +33,6 @@ public class ImageController implements ModelDriven<Object> {
     public HttpHeaders create() throws Exception {
 
         long start = System.currentTimeMillis();
-//        TupleDesc[] features = getFeaturesFromImage(imageTest.getData());
-//        Instances testingInstances = getInstances(features);
         Instances testingInstances = getInstances(getFeaturesFromImage(imageTest.getData()));
         testingInstances.setClassIndex(testingInstances.numAttributes() - 1);
         String response[] = getClass(testingInstances);
@@ -42,8 +40,8 @@ public class ImageController implements ModelDriven<Object> {
         System.out.println("TIME: " + String.valueOf(end - start));
 
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        String resp = dataBaseConnection.getTodaysSchedule("E_301");
-//        String resp = dataBaseConnection.getTodaysSchedule(response[1]);
+       // String resp = dataBaseConnection.getTodaysSchedule("E_301");
+        String resp = dataBaseConnection.getTodaysSchedule(response[1]);
         imageTest.setData(response[0]);
         //imageTest.setLocation(response[1]);
         imageTest.setLocation(resp);
